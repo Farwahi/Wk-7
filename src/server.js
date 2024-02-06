@@ -2,11 +2,27 @@ const express = require("express");
 
 const app = express();
 
-app.use("/example", express.static("example"));
+// HTTP Verbs - GET ,POST,PUT,DELETE
 
-app.use("/test", express.static("test"));
+// const response = await fetch("http://someaddress.com") //sends GET request
 
-app.listen(5002, () =>{
-    console.log("Server is listening on port 5002");
+// HTTP Verb GET
+app.get("/example", (request, response) => {
+    response.send("Hello Farwa");
+});
+
+const fakeArr = [];
+app.use(express.json());
+app.get("/getAllBooks", (request, response) => {
+    response.send({message:"Success", fakeArr: fakeArr});
+});
+
+app.post("/addBook",(request, response) =>{
+    fakeArr.push(request.body);
+    response.send({ message:"success", newBook: fakeArr[fakeArr.length - 1]});
+});
+
+app.listen(5001, () =>{
+    console.log("Server is listening on port 5001");
 });
 
